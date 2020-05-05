@@ -33,7 +33,7 @@ namespace blogApi.Models
             modelBuilder.Entity<BlockTag>(entity =>
             {
                 entity.HasNoKey();
-
+                
                 entity.ToTable("BlockTag", "BlogDatabase");
 
                 entity.HasIndex(e => e.Bid)
