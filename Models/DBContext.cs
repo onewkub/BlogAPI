@@ -15,8 +15,8 @@ namespace blogApi.Models
         {
         }
 
-        public virtual DbSet<BlockTag> BlockTag { get; set; }
         public virtual DbSet<Blog> Blog { get; set; }
+        public virtual DbSet<BlogTag> BlogTag { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,39 +30,6 @@ namespace blogApi.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BlockTag>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("BlockTag", "BlogDatabase");
-
-                entity.HasIndex(e => e.Bid)
-                    .HasName("BID");
-
-                entity.HasIndex(e => e.Tid)
-                    .HasName("TID");
-
-                entity.Property(e => e.Bid)
-                    .HasColumnName("BID")
-                    .HasMaxLength(64)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Tid)
-                    .HasColumnName("TID")
-                    .HasMaxLength(64)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.B)
-                    .WithMany()
-                    .HasForeignKey(d => d.Bid)
-                    .HasConstraintName("blocktag_ibfk_1");
-
-                entity.HasOne(d => d.T)
-                    .WithMany()
-                    .HasForeignKey(d => d.Tid)
-                    .HasConstraintName("blocktag_ibfk_2");
-            });
-
             modelBuilder.Entity<Blog>(entity =>
             {
                 entity.ToTable("Blog", "BlogDatabase");
@@ -90,6 +57,39 @@ namespace blogApi.Models
                     .HasColumnName("update_time")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAddOrUpdate();
+            });
+
+            modelBuilder.Entity<BlogTag>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("BlogTag", "BlogDatabase");
+
+                entity.HasIndex(e => e.Bid)
+                    .HasName("BID");
+
+                entity.HasIndex(e => e.Tid)
+                    .HasName("TID");
+
+                entity.Property(e => e.Bid)
+                    .HasColumnName("BID")
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tid)
+                    .HasColumnName("TID")
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.B)
+                    .WithMany()
+                    .HasForeignKey(d => d.Bid)
+                    .HasConstraintName("blogtag_ibfk_1");
+
+                entity.HasOne(d => d.T)
+                    .WithMany()
+                    .HasForeignKey(d => d.Tid)
+                    .HasConstraintName("blogtag_ibfk_2");
             });
 
             modelBuilder.Entity<Tag>(entity =>

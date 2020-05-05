@@ -37,19 +37,22 @@ namespace blogApi.Controllers
         {
             try
             {
-                if(ModelState.IsValid){
-                    dBContext.Add(value);
+                if (ModelState.IsValid)
+                {
+                    value.BlogId = RandomString(64);
+                    dBContext.Blog.Add(value);
                     dBContext.SaveChanges();
                 }
             }
-            catch(System.Exception){
+            catch (System.Exception)
+            {
                 throw;
             }
         }
 
         // PUT api/blog/5
         [HttpPut("{id}")]
-        public void PutBlog(string id, Blog value)
+        public void PutBlog(string id, dynamic value)
         {
             try
             {
@@ -60,7 +63,7 @@ namespace blogApi.Controllers
             }
             catch (System.Exception)
             {
-                
+
                 throw;
             }
         }
@@ -72,5 +75,13 @@ namespace blogApi.Controllers
             dBContext.Blog.Remove(dBContext.Blog.Find(id));
             dBContext.SaveChanges();
         }
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "abcdefghijklmnop0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
     }
 }
