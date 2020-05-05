@@ -43,7 +43,7 @@ namespace blogApi.Controllers
                     value.BlogId = RandomString._RandomString(64);
                     dBContext.Blog.Add(value);
                     dBContext.SaveChanges();
-                    return "OK";
+                    return "Blog has been posted.";
                 }
                 return "Connection Problem";
             }
@@ -56,7 +56,7 @@ namespace blogApi.Controllers
 
         // PUT api/blog/5
         [HttpPut("{id}")]
-        public String PutBlog(string id, dynamic value)
+        public String PutBlog(string id, Blog value)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace blogApi.Controllers
                 obj.Body = value.Body;
                 obj.Title = value.Title;
                 dBContext.SaveChanges();
-                return "OK";
+                return "Blog has been updated.";
             }
             catch (Exception ex)
             {
@@ -75,10 +75,11 @@ namespace blogApi.Controllers
 
         // DELETE api/blog/5
         [HttpDelete("{id}")]
-        public void DeleteBlogById(string id)
+        public string DeleteBlogById(string id)
         {
             dBContext.Blog.Remove(dBContext.Blog.Find(id));
             dBContext.SaveChanges();
+            return "Blog had been removed.";
         }
 
     }
