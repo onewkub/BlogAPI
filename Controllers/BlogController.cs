@@ -33,7 +33,7 @@ namespace blogApi.Controllers
 
         // POST api/blog
         [HttpPost("")]
-        public void Poststring(Blog value)
+        public void PostBlog(Blog value)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace blogApi.Controllers
 
         // PUT api/blog/5
         [HttpPut("{id}")]
-        public void Putstring(string id, Blog value)
+        public void PutBlog(string id, Blog value)
         {
             try
             {
@@ -67,9 +67,10 @@ namespace blogApi.Controllers
 
         // DELETE api/blog/5
         [HttpDelete("{id}")]
-        public void DeletestringById(string id)
+        public void DeleteBlogById(string id)
         {
             dBContext.Blog.Remove(dBContext.Blog.Find(id));
+            dBContext.SaveChanges();
         }
     }
 }
