@@ -12,9 +12,11 @@ namespace blogApi.Controllers
     public class BlogController : ControllerBase
     {
         private DBContext dBContext;
+        private TagController tagController;
         public BlogController(DBContext _dbContext)
         {
             dBContext = _dbContext;
+            tagController = new TagController(_dbContext);
         }
 
         // GET api/blog
@@ -34,7 +36,7 @@ namespace blogApi.Controllers
 
         // POST api/blog
         [HttpPost("")]
-        public String PostBlog(Blog value)
+        public ActionResult<string> PostBlog(Blog value)
         {
             try
             {
@@ -56,7 +58,7 @@ namespace blogApi.Controllers
 
         // PUT api/blog/5
         [HttpPut("{id}")]
-        public String PutBlog(string id, Blog value)
+        public ActionResult<string> PutBlog(string id, Blog value)
         {
             try
             {
@@ -75,7 +77,7 @@ namespace blogApi.Controllers
 
         // DELETE api/blog/5
         [HttpDelete("{id}")]
-        public string DeleteBlogById(string id)
+        public ActionResult<string> DeleteBlogById(string id)
         {
             dBContext.Blog.Remove(dBContext.Blog.Find(id));
             dBContext.SaveChanges();
