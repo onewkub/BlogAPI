@@ -24,7 +24,7 @@ namespace blogApi.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Server=localhost;User=root;Password=;Database=BlogDatabase;");
+                optionsBuilder.UseMySQL("Server=localhost;User=root;Database=BlogDatabase");
             }
         }
 
@@ -33,7 +33,7 @@ namespace blogApi.Models
             modelBuilder.Entity<BlockTag>(entity =>
             {
                 entity.HasNoKey();
-                
+
                 entity.ToTable("BlockTag", "BlogDatabase");
 
                 entity.HasIndex(e => e.Bid)
@@ -44,12 +44,12 @@ namespace blogApi.Models
 
                 entity.Property(e => e.Bid)
                     .HasColumnName("BID")
-                    .HasMaxLength(60)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Tid)
                     .HasColumnName("TID")
-                    .HasMaxLength(60)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.B)
@@ -69,7 +69,7 @@ namespace blogApi.Models
 
                 entity.Property(e => e.BlogId)
                     .HasColumnName("BlogID")
-                    .HasMaxLength(60)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Body)
@@ -77,21 +77,32 @@ namespace blogApi.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreateTime).HasColumnName("create_time");
+                entity.Property(e => e.CreateTime)
+                    .HasColumnName("create_time")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.UpdateTime)
+                    .HasColumnName("update_time")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
             });
 
             modelBuilder.Entity<Tag>(entity =>
             {
                 entity.ToTable("Tag", "BlogDatabase");
 
+                entity.HasIndex(e => e.TagName)
+                    .HasName("TagName")
+                    .IsUnique();
+
                 entity.Property(e => e.TagId)
                     .HasColumnName("TagID")
-                    .HasMaxLength(60)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.TagName)

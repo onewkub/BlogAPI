@@ -8,6 +8,7 @@ namespace blogApi.Models
         public string BlogId { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
-        public DateTimeOffset CreateTime { get; set; }
+        public DateTimeOffset? CreateTime { get; set; }
+        public DateTimeOffset? UpdateTime { get; set; }
     }
 }
