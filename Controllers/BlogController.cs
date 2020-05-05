@@ -11,9 +11,10 @@ namespace blogApi.Controllers
     [ApiController]
     public class BlogController : ControllerBase
     {
-        private DBContext dBContext = new DBContext();
-        public BlogController()
+        private DBContext dBContext;
+        public BlogController(DBContext _dbContext)
         {
+            dBContext = _dbContext;
         }
 
         // GET api/blog
@@ -33,26 +34,29 @@ namespace blogApi.Controllers
 
         // POST api/blog
         [HttpPost("")]
-        public void PostBlog(Blog value)
+        public String PostBlog(Blog value)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    value.BlogId = RandomString(64);
+                    value.BlogId = RandomString._RandomString(64);
                     dBContext.Blog.Add(value);
                     dBContext.SaveChanges();
+                    return "OK";
                 }
+                return "Connection Problem";
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                return ex.Message;
             }
+
         }
 
         // PUT api/blog/5
         [HttpPut("{id}")]
-        public void PutBlog(string id, dynamic value)
+        public String PutBlog(string id, dynamic value)
         {
             try
             {
@@ -60,11 +64,12 @@ namespace blogApi.Controllers
                 obj.Body = value.Body;
                 obj.Title = value.Title;
                 dBContext.SaveChanges();
+                return "OK";
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
+                return ex.Message;
 
-                throw;
             }
         }
 
@@ -74,13 +79,6 @@ namespace blogApi.Controllers
         {
             dBContext.Blog.Remove(dBContext.Blog.Find(id));
             dBContext.SaveChanges();
-        }
-        private static Random random = new Random();
-        public static string RandomString(int length)
-        {
-            const string chars = "abcdefghijklmnop0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
     }

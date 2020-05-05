@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using blogApi.Models;
 
 namespace blogApi
 {
@@ -25,6 +27,8 @@ namespace blogApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DBContext>(options =>
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }
 
