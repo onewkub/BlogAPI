@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using blogApi.Models;
 using Microsoft.AspNetCore.Cors;
+using Newtonsoft.Json.Linq;
 
 namespace blogApi.Controllers
 {
@@ -36,21 +37,28 @@ namespace blogApi.Controllers
             
         }
         
-        [HttpPost("{id}")]
-        public ActionResult<string> AddTag(string id, HashSet<string> Hashtag)
+        [HttpPost("")]
+        public ActionResult<string> AddTag(List<Tag> Hashtag)
         {
             try
             {
-                foreach (var item in Hashtag)
-                {
-                    var _tagname = item.Trim('#');
+                // // var htList = new HashSet<string>(Hashtag.value);
+                // foreach (var item in Hashtag)
+                // {
+                //     var _tagname = item..Trim('#');
 
-                    var _tag = new Tag(){
-                        Bid = id,
-                        TagName = _tagname
-                    };
-                    dBContext.Add(_tag);
-                }
+                //     var _tag = new Tag(){
+                //         Bid = id,
+                //         TagName = _tagname
+                //     };
+                //     dBContext.Add(_tag);
+                // }
+                // dBContext.AddRange(Hashtag);
+                // foreach (var item in Hashtag)
+                // {
+                //     dBContext.Add(item);
+                // }
+                dBContext.AddRange(Hashtag);
                 dBContext.SaveChanges();
                 return Ok("ok");
 
@@ -60,6 +68,7 @@ namespace blogApi.Controllers
 
                 return Ok(ex.Message);
             }
+            // return Ok(Hashtag);
 
         }
 
