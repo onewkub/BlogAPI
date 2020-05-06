@@ -18,9 +18,50 @@ namespace blogApi.Controllers
             dBContext = _db;
         }
 
-        public void AddTag(string BlogID, List<string> Hashtag){
+        [HttpGet("{tagName}")]
+        public ActionResult<IEnumerable<string>> GetBlogIDContainTag(string tagName)
+        {                
+            // return Ok(new List<string> {tagName});
+            try
+            {
+                return Ok(dBContext.Tag.Where(tag => tag.TagName == tagName).Select(tag => tag.Bid).Distinct().ToList());
+            }
+            catch (Exception ex)
+            {
+                
+                return Ok(ex);
+            }
             
         }
+        
+        [HttpPost("{id}")]
+        public ActionResult<string> AddTag(string id, HashSet<string> Hashtag)
+        {
+            try
+            {
+                foreach (var item in Hashtag)
+                {
+                    var _tagname = item.Trim('#');
 
-    }
+                    var _tag = new Tag(){
+                        Bid = id,
+                        TagName = _tagname
+                    };
+                    dBContext.Add(_tag);
+                }
+                dBContext.SaveChanges();
+                return Ok("ok");
+
+            }
+            catch (Exception ex)
+            {
+
+                return Ok(ex.Message);
+            }
+
+        }
+
+
+
+}
 }

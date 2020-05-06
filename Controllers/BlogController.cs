@@ -45,7 +45,7 @@ namespace blogApi.Controllers
                     value.BlogId = RandomString._RandomString(64);
                     dBContext.Blog.Add(value);
                     dBContext.SaveChanges();
-                    return "Blog has been posted.";
+                    return Ok(value.BlogId);
                 }
                 return "Connection Problem";
             }
