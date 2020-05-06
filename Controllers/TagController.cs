@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using blogApi.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace blogApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class TagController : ControllerBase
     {
         private DBContext dBContext;

@@ -29,6 +29,7 @@ namespace blogApi
         {
             services.AddDbContext<DBContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddCors(c => c.AddPolicy("AllowOrigin", option=>option.AllowAnyOrigin()));
             services.AddControllers();
         }
 
@@ -42,6 +43,8 @@ namespace blogApi
 
             // app.UseHttpsRedirection();
 
+            app.UseCors("AllowOrigin");
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -50,6 +53,7 @@ namespace blogApi
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
