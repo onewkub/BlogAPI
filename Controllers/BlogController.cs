@@ -24,7 +24,7 @@ namespace blogApi.Controllers
         [HttpGet("")]
         public ActionResult<IEnumerable<Blog>> GetBlog()
         {
-            return Ok(dBContext.Blog.ToList<Blog>());
+            return Ok(dBContext.Blog.OrderByDescending(b => b.CreateTime).ToList<Blog>());
             // return new List<Blog> { null };
         }
 
