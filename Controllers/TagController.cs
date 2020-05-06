@@ -42,25 +42,9 @@ namespace blogApi.Controllers
         {
             try
             {
-                // // var htList = new HashSet<string>(Hashtag.value);
-                // foreach (var item in Hashtag)
-                // {
-                //     var _tagname = item..Trim('#');
-
-                //     var _tag = new Tag(){
-                //         Bid = id,
-                //         TagName = _tagname
-                //     };
-                //     dBContext.Add(_tag);
-                // }
-                // dBContext.AddRange(Hashtag);
-                // foreach (var item in Hashtag)
-                // {
-                //     dBContext.Add(item);
-                // }
                 dBContext.AddRange(Hashtag);
                 dBContext.SaveChanges();
-                return Ok("ok");
+                return Ok();
 
             }
             catch (Exception ex)
