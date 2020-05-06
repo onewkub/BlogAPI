@@ -37,7 +37,7 @@ namespace blogApi.Controllers
 
         // POST api/blog
         [HttpPost("")]
-        public ActionResult<string> PostBlog(Blog value)
+        public ActionResult<StringValue> PostBlog(Blog value)
         {
             try
             {
@@ -46,13 +46,13 @@ namespace blogApi.Controllers
                     value.BlogId = RandomString._RandomString(64);
                     dBContext.Blog.Add(value);
                     dBContext.SaveChanges();
-                    return Ok(value.BlogId);
+                    return Ok(new StringValue() {value = value.BlogId});
                 }
-                return "Connection Problem";
+                return Ok(new StringValue() {value = "Connection Problem"});
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return Ok(new StringValue() {value = ex.Message});
             }
 
         }

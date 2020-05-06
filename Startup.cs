@@ -29,7 +29,7 @@ namespace blogApi
         {
             services.AddDbContext<DBContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddCors(c => c.AddPolicy("AllowOrigin", option=>option.AllowAnyOrigin()));
+            services.AddCors(c => c.AddPolicy("AllowOrigin", option=>option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddControllers();
         }
 
