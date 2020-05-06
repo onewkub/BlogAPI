@@ -56,10 +56,12 @@ namespace blogApi.Models
 
             modelBuilder.Entity<Tag>(entity =>
             {
-                entity.HasKey(e => new { e.Bid, e.TagName })
-                    .HasName("PRIMARY");
+                entity.HasNoKey();
 
                 entity.ToTable("TAG", "BlogDatabase");
+
+                entity.HasIndex(e => e.Bid)
+                    .HasName("BID");
 
                 entity.Property(e => e.Bid)
                     .HasColumnName("BID")
@@ -71,9 +73,8 @@ namespace blogApi.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.B)
-                    .WithMany(p => p.Tag)
+                    .WithMany()
                     .HasForeignKey(d => d.Bid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("tag_ibfk_1");
             });
 
