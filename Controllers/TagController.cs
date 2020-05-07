@@ -36,6 +36,24 @@ namespace blogApi.Controllers
             }
             
         }
+
+        [HttpGet("rank")]
+
+        public ActionResult<IEnumerable<dynamic>> GetTagRanking(){
+            try
+            {
+                return Ok(dBContext.Tag
+                .GroupBy(t => t.TagName)
+                .Select(t => new {tagName = t.Key, count = t.Count()})
+                .OrderBy(t => t.count)
+                );
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+        }
         
         [HttpPost("")]
         public ActionResult<string> AddTag(List<Tag> Hashtag)
@@ -44,7 +62,7 @@ namespace blogApi.Controllers
             {
                 dBContext.AddRange(Hashtag);
                 dBContext.SaveChanges();
-                return Ok();
+                return Ok(Hashtag);
 
             }
             catch (Exception ex)
