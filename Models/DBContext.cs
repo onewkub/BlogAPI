@@ -20,7 +20,11 @@ namespace blogApi.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("Server=localhost;User=root;Database=blogdatabase");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,7 +77,6 @@ namespace blogApi.Models
                 entity.HasOne(d => d.B)
                     .WithMany(p => p.Tag)
                     .HasForeignKey(d => d.Bid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("tag_ibfk_1");
             });
 
