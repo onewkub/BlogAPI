@@ -22,12 +22,21 @@ namespace blogApi.Controllers
         }
 
         [HttpGet("{tagName}")]
-        public ActionResult<IEnumerable<string>> GetBlogIDContainTag(string tagName)
+        public ActionResult<IEnumerable<string>> GetBlogContainTag(string tagName)
         {                
             // return Ok(new List<string> {tagName});
             try
             {
-                return Ok(dBContext.Tag.Where(tag => tag.TagName == tagName).Select(tag => tag.Bid).Distinct().ToList());
+                return Ok(
+                    dBContext.Blog.Where(b => 
+                    dBContext.Tag
+                    .Where(tag => tag.TagName == tagName)
+                    .Select(tag => tag.Bid)
+                    .Distinct().Contains(b.BlogId))
+                    .OrderByDescending(b => b.CreateTime)
+                    .ToList()
+                    );
+
             }
             catch (Exception ex)
             {
