@@ -14,7 +14,7 @@ CREATE DATABASE blogdatabase
 CREATE TABLE `__EFMigrationsHistory` ( `MigrationId` nvarchar(150) NOT NULL, `ProductVersion` nvarchar(32) NOT NULL, PRIMARY KEY (`MigrationId`) );
 ```
 ### Edit your connetion string
-./__in appsettings.json__
+./__appsettings.json__
 ```c#
 {
   ,
