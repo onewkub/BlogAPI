@@ -15,12 +15,12 @@ CREATE TABLE `__EFMigrationsHistory` ( `MigrationId` nvarchar(150) NOT NULL, `Pr
 ```
 ### Edit your connetion string
 ./__in appsettings.json__
-```json
+```c#
 {
-...,
+  ,
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;User=root;Database=BlogDatabase;" << Your connection string
+    "DefaultConnection": "Server=YourServer;User=username;Password=password;Database=BlogDatabase;" 
   }
 }
 ```
