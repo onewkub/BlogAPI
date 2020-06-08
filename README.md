@@ -8,9 +8,9 @@ install [.Net SDK](https://dotnet.microsoft.com/download)
 dotnet tool install --global dotnet-ef
 ```
 ### Create database 
-```
-create database: blogdatabase
-if use Mysql run:
+```sql
+CREATE DATABASE blogdatabase
+#if use Mysql run:
 CREATE TABLE `__EFMigrationsHistory` ( `MigrationId` nvarchar(150) NOT NULL, `ProductVersion` nvarchar(32) NOT NULL, PRIMARY KEY (`MigrationId`) );
 ```
 ### Edit your connetion string
