@@ -28,7 +28,9 @@ namespace blogApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DBContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+                //options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))); //MySQL
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //SQLServer
+                
             services.AddCors(c => c.AddPolicy("AllowOrigin", option=>option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddControllers();
         }
